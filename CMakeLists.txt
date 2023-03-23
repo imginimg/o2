@@ -18,7 +18,10 @@ set(API_VERSION ${VER_MAJOR}.${VER_MINOR}.${API_VER_PATCH})
 
 project(o2)
 
-option(o2_WITH_QT5 "Use Qt5" ON)
+set(o2_QT_VERSION Qt6 CACHE STRING "Possible values: Qt6, Qt5, Qt4.")
+if(NOT (${o2_QT_VERSION} STREQUAL Qt6 OR ${o2_QT_VERSION} STREQUAL Qt5 OR ${o2_QT_VERSION} STREQUAL Qt4))
+    message(FATAL_ERROR "Unsupported Qt version provided!")
+endif()
 
 set(o2_LIB_SUFFIX "" CACHE STRING "Suffix for install 'lib' directory, e.g. 64 for lib64")
 
@@ -87,20 +90,18 @@ if (o2_WITH_OAUTH1)
     set(HAVE_OAUTH1_SUPPORT 1)
 endif()
 
-
-
 if(o2_WITH_TWITTER OR o2_WITH_DROPBOX OR o2_WITH_FLICKR OR o2_WITH_SMUGMUG)
-  set(o2_WITH_OAUTH1 ON)
+    set(o2_WITH_OAUTH1 ON)
 endif()
 
 option(o2_BUILD_EXAMPLES "Build examples" OFF)
 
 if(WIN32)
-  add_definitions(-DO2_DLL_EXPORT)
+    add_definitions(-DO2_DLL_EXPORT)
 endif()
 
 add_subdirectory(src)
 
 if(o2_BUILD_EXAMPLES)
-  add_subdirectory(examples)
+    add_subdirectory(examples)
 endif(o2_BUILD_EXAMPLES)
