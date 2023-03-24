@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 2.8.12)
 
 if(POLICY CMP0048) # in CMake >= 3.0.0
     cmake_policy(SET CMP0048 OLD) # keep project() from clearing VERSION variables
